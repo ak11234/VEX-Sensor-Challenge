@@ -1,4 +1,4 @@
-#pragma config(Sensor, dgtl1,  sonic,          sensorSONAR_cm)
+#pragma config(Sensor, dgtl1,  sonic,          sensorSONAR_mm)
 #pragma config(Sensor, dgtl3,  limit,          sensorTouch)
 #pragma config(Motor,  port1,           leftmotor,     tmotorVex393_HBridge, openLoop, reversed)
 #pragma config(Motor,  port10,          rightmotor,    tmotorVex393_HBridge, openLoop)
@@ -23,7 +23,7 @@ task main() {
     if (SensorValue(limit) == 1) {
       forwardfortime(30, 1000);
     }
-    if (SensorValue(sonic) < 120) {
+    if (SensorValue(sonic) < 1200) {
       forwardfortime(30, 1000);
     }
   }
