@@ -42,6 +42,6 @@ task main() {
   SensorValue(encoderleft) = 0;
   while (true) {
     //Insert code to make robot go get balls.
-
+    break //Stop the code, since this is just a test
   }
 }
