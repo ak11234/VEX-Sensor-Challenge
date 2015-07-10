@@ -79,6 +79,20 @@ void uturn (bool direction) {
 		}
 	}
 }
+void dump () {
+	motor[scooptilt] = 30;
+	wait1Msec(750);
+	motor[scooptilt] = 0;
+	motor[topjaw] = -30;
+	wait1Msec(1000);
+	motor[topjaw] = 0;
+	wait1Msec(3500);
+	motor[topjaw] = 30;
+	motor[scooptilt] = -30;
+	wait1Msec(1000);
+	motor[topjaw] = 0;
+	motor[scooptilt] = 0;
+}
 
 	//Beginning the autonomous operation of the robot.
 	task main() {
@@ -95,7 +109,7 @@ void uturn (bool direction) {
 				setmotorspeed(100);
 			}
 			uturn(true);
-			zigzagcount=zigzagcount + 1
+			zigzagcount=zigzagcount + 1;
 		}
 		gotobin();
 	}
