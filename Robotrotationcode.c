@@ -29,22 +29,22 @@ True = Clockwise turn. False = Counterclockwise turn.
 If the time paramater is -1, the motor will not be stopped
 when the function ends, meaning they must be stopped later. */
 void zeropointturn (int speed, int time, bool direction) {
-  if (direction == true) {
-    motor[leftmotor] = speed;
-    motor[rightmotor] = -1 * speed;
-    if (time > 0) {
-      wait1Msec(time);
-      setmotorspeed(0);
-    }
-  }
-  if (direction == false) {
-    motor[leftmotor] = -1 * speed;
-    motor[rightmotor] = speed;
-    if (time > 0) {
-      wait1Msec(time);
-      setmotorspeed(0);
-    }
-  }
+	if (direction == true) {
+		motor[leftmotor] = speed;
+		motor[rightmotor] = -1 * speed;
+		if (time > 0) {
+			wait1Msec(time);
+			setmotorspeed(0);
+		}
+	}
+	if (direction == false) {
+		motor[leftmotor] = -1 * speed;
+		motor[rightmotor] = speed;
+		if (time > 0) {
+			wait1Msec(time);
+			setmotorspeed(0);
+		}
+	}
 }
 /* This function automatically does a u-turn.
 True = right turn, False = left turn */
