@@ -81,8 +81,8 @@ void uturn (bool direction) {
 		while (true) {
 			while (SensorValue(sonic) > 10) {
 				setmotorspeed(127);
+
 			}
-			uturn(false);
 			break; //Stop the code, since this is just a test
 		}
 	}
