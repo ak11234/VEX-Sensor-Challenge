@@ -21,7 +21,28 @@ void setmotorspeed (int speed) {
 	motor[leftmotor] = speed;
 	motor[rightmotor] = speed;
 }
+void zeropointturn (int speed, int time, bool direction) {
+  if (direction == true) {
+    motor[leftmotor] = speed;
+    motor[rightmotor] = -1 * speed;
+    if (time !== -1) {
+      wait1Msec(time)
+      setmotorspeed(0);
+    }
+  }
+  if (direction == false) {
+    motor[leftmotor] = -1 * speed;
+    motor[rightmotor] = speed;
+    if (time < 1) {
+      wait1Msec(time)
+      setmotorspeed(0);
+    }
+  }
+}
 void gotobin () {
+  int y1
+  int y2
+  int y3
 
 }
 /* This function automatically does a u-turn.
