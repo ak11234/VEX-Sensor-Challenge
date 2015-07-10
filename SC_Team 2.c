@@ -2,7 +2,6 @@
 #pragma config(Sensor, in2,    line2,          sensorLineFollower)
 #pragma config(Sensor, in3,    line3,          sensorLineFollower)
 #pragma config(Sensor, dgtl1,  sonic,          sensorSONAR_cm)
-#pragma config(Sensor, dgtl3,  limit,          sensorTouch)
 #pragma config(Sensor, dgtl4,  leftencode,     sensorQuadEncoder)
 #pragma config(Sensor, dgtl6,  rightencode,    sensorQuadEncoder)
 #pragma config(Motor,  port1,           leftmotor,     tmotorVex393_HBridge, openLoop)
@@ -33,28 +32,86 @@ True = Clockwise turn. False = Counterclockwise turn.
 If the time paramater is -1, the motor will not be stopped
 when the function ends, meaning they must be stopped later. */
 void zeropointturn (int speed, int time, bool direction) {
-  if (direction == true) {
-    motor[leftmotor] = speed;
-    motor[rightmotor] = -1 * speed;
-    if (time > 0) {
-      wait1Msec(time);
-      setmotorspeed(0);
-    }
-  }
-  if (direction == false) {
-    motor[leftmotor] = -1 * speed;
-    motor[rightmotor] = speed;
-    if (time > 0) {
-      wait1Msec(time);
-      setmotorspeed(0);
-    }
-  }
+	if (direction == true) {
+		motor[leftmotor] = speed;
+		motor[rightmotor] = -1 * speed;
+		if (time > 0) {
+			wait1Msec(time);
+			setmotorspeed(0);
+		}
+	}
+	if (direction == false) {
+		motor[leftmotor] = -1 * speed;
+		motor[rightmotor] = speed;
+		if (time > 0) {
+			wait1Msec(time);
+			setmotorspeed(0);
+		}
+	}
 }
 void gotobin () {
-  int y1;
-  int y2;
-  int y3;
-
+	motor[topjaw] = 30;
+	motor[scooptilt] = -30;
+	wait1Msec(1000);
+	motor[topjaw] = 0;
+	motor[scooptilt] = 0;
+	motor[arm] = 127;
+	wait1Msec(1000);
+	motor[arm] = 0;
+	int distance = -1;
+	while(distance == -1)
+	{
+		zeropointturn(127, -1, true);
+		wait1Msec(100);
+		distance = SensorValue[sonic];
+	}
+	setmotorspeed(0);
+	float y1=0;
+	float y2=1;
+	float y3=0;
+	while (y2>y3 || y2>y1)
+	{
+		zeropointturn(50, -1, true);
+		wait1Msec(50);
+		y1 = SensorValue[sonic];
+		wait1Msec(50);
+		y2 = SensorValue[sonic];
+		wait1Msec(50);
+		y3 = SensorValue[sonic];
+	}
+	while (!(SensorValue[sonic] == y2))
+	{
+		zeropointturn(30, -1, false);
+	}
+	setmotorspeed(0);
+	while (SensorValue[sonic] > 20)
+	{
+		setmotorspeed(80);
+	}
+	setmotorspeed(0);
+	y1 = 0;
+	y2 = 1;
+	y3 = 0;
+	while (y2>y3 || y2>y1)
+	{
+		zeropointturn(50, -1, true);
+		wait1Msec(50);
+		y1 = SensorValue[sonic];
+		wait1Msec(50);
+		y2 = SensorValue[sonic];
+		wait1Msec(50);
+		y3 = SensorValue[sonic];
+	}
+	while (!(SensorValue[sonic] == y2))
+	{
+		zeropointturn(30, -1, false);
+	}
+	setmotorspeed(0);
+	while (SensorValue[sonic] > 60)
+	{
+		setmotorspeed(80);
+	}
+	setmotorspeed(0);
 }
 /* This function automatically does a u-turn.
 True = right turn, False = left turn */
@@ -94,22 +151,22 @@ void dump () {
 	motor[scooptilt] = 0;
 }
 
-	//Beginning the autonomous operation of the robot.
-	task main() {
-		SensorValue(rightencode) = 0;
-		SensorValue(leftencode) = 0;
-		int zigzagcount = 0;
-		while (zigzagcount > 2) {
-			while (SensorValue(sonic) > 10) {
-				setmotorspeed(100);
-			}
-			setmotorspeed(0);
-			uturn(false);
-			while (SensorValue(sonic) > 10) {
-				setmotorspeed(100);
-			}
-			uturn(true);
-			zigzagcount=zigzagcount + 1;
+//Beginning the autonomous operation of the robot.
+task main() {
+	SensorValue(rightencode) = 0;
+	SensorValue(leftencode) = 0;
+	int zigzagcount = 0;
+	while (zigzagcount > 2) {
+		while (SensorValue(sonic) > 10) {
+			setmotorspeed(100);
 		}
-		gotobin();
+		setmotorspeed(0);
+		uturn(false);
+		while (SensorValue(sonic) > 10) {
+			setmotorspeed(100);
+		}
+		uturn(true);
+		zigzagcount=zigzagcount + 1;
 	}
+	gotobin();
+}
