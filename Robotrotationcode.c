@@ -86,9 +86,9 @@ task main() {
 		distance = SensorValue[sonic];
 	}
 	setmotorspeed(0);
-	float y1;
-	float y2;
-	float y3;
+	float y1=0;
+	float y2=1;
+	float y3=0;
 	while (y2>y3 || y2>y1)
 	{
 		zeropointturn(50, -1, true);
@@ -108,6 +108,10 @@ task main() {
 	{
 		setmotorspeed(80);
 	}
+	setmotorspeed(0);
+	y1 = 0;
+	y2 = 1;
+	y3 = 0;
 	while (y2>y3 || y2>y1)
 	{
 		zeropointturn(50, -1, true);
@@ -127,4 +131,5 @@ task main() {
 	{
 		setmotorspeed(80);
 	}
+	setmotorspeed(0);
 }
