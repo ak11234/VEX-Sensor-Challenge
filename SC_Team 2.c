@@ -84,11 +84,18 @@ void uturn (bool direction) {
 	task main() {
 		SensorValue(rightencode) = 0;
 		SensorValue(leftencode) = 0;
-		while (true) {
+		int zigzagcount = 0;
+		while (zigzagcount > 2) {
 			while (SensorValue(sonic) > 10) {
-				setmotorspeed(127);
-
+				setmotorspeed(100);
 			}
-			break; //Stop the code, since this is just a test
+			setmotorspeed(0);
+			uturn(false);
+			while (SensorValue(sonic) > 10) {
+				setmotorspeed(100);
+			}
+			uturn(true);
+			zigzagcount=zigzagcount + 1
 		}
+		gotobin();
 	}
