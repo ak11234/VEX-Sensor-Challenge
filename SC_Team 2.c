@@ -22,18 +22,29 @@ void setmotorspeed (int speed) {
   motor[rightmotor] = speed;
 }
 void gotobin () {
-  while (SensorValue(encoderright) > 5 && SensorValue(encoderleft) > 5) {
-    setmotorspeed(-127);
+
+}
+/* This function automatically does a u-turn.
+True = right turn, False = left turn */
+void uturn (bool direction) {
+  if (direction == true) {
+    SensorValue(leftencode) = 0;
+    SensorValue(rightencode) = 0;
+    while (SensorValue(leftencode) > -160) {
+      motor[leftmotor] = 127;
+    	motor[rightmotor] = -127;
+    }
+    setmotorspeed(127);
+    wait1Msec(500);
+  if (direction == false) {
+    SensorValue(leftencode) = 0;
+    SensorValue(rightencode) = 0;
+    while (SensorValue(leftencode) < 160) {
+      motor[leftmotor] = -127;
+    	motor[rightmotor] = 127;
+    }
+    setmotorspeed(0);
   }
-  setmotorspeed(0);
-  while (SensorValue(encoderright) > 5) {
-    motor[rightmotor] = -127;
-  }
-  setmotorspeed(0);
-  while (SensorValue(encoderleft) > 5) {
-    motor[leftmotor] = -127;
-  }
-  setmotorspeed(0);
 }
 
 //Beginning the autonomous operation of the robot.
@@ -41,7 +52,10 @@ task main() {
   SensorValue(encoderright) = 0;
   SensorValue(encoderleft) = 0;
   while (true) {
-    //Insert code to make robot go get balls.
-    break //Stop the code, since this is just a test
+    while (SensorValue(sonic) > 10) {
+      setmotorspeed = 127;
+
+    }
+    break; //Stop the code, since this is just a test
   }
 }
